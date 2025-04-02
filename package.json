@@ -1,0 +1,37 @@
+{
+  "name": "protocol-land-sdk",
+  "version": "0.0.1",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist/",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "protocol land",
+    "sdk"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "Protocol Land SDK for AO",
+  "devDependencies": {
+    "@types/lodash": "^4.17.15",
+    "@types/node": "^22.12.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {}
+}
