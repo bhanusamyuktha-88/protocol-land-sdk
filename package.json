@@ -37,6 +37,8 @@
   "dependencies": {
     "@permaweb/aoconnect": "^0.0.78",
     "arweave": "^1.15.7",
+    "uuid": "^11.1.0",
+    "warp-arbundles": "^1.0.4",
     "zod": "^3.24.2"
   }
 }
