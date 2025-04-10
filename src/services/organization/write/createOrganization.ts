@@ -4,16 +4,15 @@ import { sendMessage } from "../../../helpers/arweave/sendMessage";
 import { PL_PROCESS_ID } from "../../../constants/constants";
 import { Tag } from "../../../types";
 
-
 export const createOrganization = async (
   id: string,
   name: string,
   username: string,
   description: string,
-  signer: any
+  wallet: string
 ): Promise<string> => {
   const msgId = await sendMessage({
-    signer: signer,
+    signer: wallet,
     tags: getTags({
       Action: "Create-Organization",
       Id: id,
