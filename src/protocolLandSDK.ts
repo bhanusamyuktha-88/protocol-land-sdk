@@ -1,4 +1,3 @@
-import { reject } from "lodash";
 import { arweaveSearchNode } from "./helpers/arweave/config/arweaveInstance";
 import * as org from "./services/organization";
 import * as repo from "./services/repository";
