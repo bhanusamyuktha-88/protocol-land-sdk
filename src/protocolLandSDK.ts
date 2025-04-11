@@ -1,4 +1,5 @@
 import { arweaveSearchNode } from "./helpers/arweave/config/arweaveInstance";
+import * as org from "./services/organization";
 import * as repo from "./services/repository";
 import * as user from "./services/user";
 import { User } from "./types";
@@ -45,6 +46,20 @@ export class ProtocolLandSDK {
       updateRepoDeploymentBranch: repo.updateRepoDeploymentBranch,
       updateRepoPrivateStateTxId: repo.updateRepoPrivateStateTxId,
       updateRepoTxId: repo.updateRepoTxId,
-    }
+    };
+  }
+
+  organization() {
+    return {
+      getOrganizationById: org.getOrganizationById,
+      getOrganizationNameAvailability: org.getOrganizationNameAvailability,
+      getUserOrganizations: org.getUserOrganizations,
+      createOrganization: org.createOrganization,
+      acceptInvite: org.acceptInvite,
+      cancelInvite: org.cancelInvite,
+      inviteMember: org.inviteMember,
+      rejectInvite: org.rejectInvite,
+      updateOrganization: org.updateOrganization,
+    };
   }
 }
