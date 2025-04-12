@@ -2,6 +2,7 @@ import { arweaveSearchNode } from "./helpers/arweave/config/arweaveInstance";
 import * as org from "./services/organization";
 import * as repo from "./services/repository";
 import * as user from "./services/user";
+import * as issue from "./services/issues";
 
 export class ProtocolLandSDK {
   constructor(host?: string) {
@@ -56,7 +57,7 @@ export class ProtocolLandSDK {
     };
   }
 
-  organization() {
+  Organization() {
     return {
       getOrganizationById: org.getOrganizationById,
       getOrganizationNameAvailability: org.getOrganizationNameAvailability,
@@ -67,6 +68,19 @@ export class ProtocolLandSDK {
       inviteMember: org.inviteMember,
       rejectInvite: org.rejectInvite,
       updateOrganization: org.updateOrganization,
+    };
+  }
+
+  Issues() {
+    return {
+      getIssueById: issue.getIssueById,
+      addAssigneeToIssue: issue.addAssigneeToIssue,
+      addCommentToIssue: issue.addCommentToIssue,
+      closeIssue: issue.closeIssue,
+      createIssue: issue.createIssue,
+      reopenIssue: issue.reopenIssue,
+      updateIssueComment: issue.updateIssueComment,
+      updateIssueDetails: issue.updateIssueDetails,
     };
   }
 }
