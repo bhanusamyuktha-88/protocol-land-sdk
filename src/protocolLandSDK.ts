@@ -2,7 +2,6 @@ import { arweaveSearchNode } from "./helpers/arweave/config/arweaveInstance";
 import * as org from "./services/organization";
 import * as repo from "./services/repository";
 import * as user from "./services/user";
-import { User } from "./types";
 
 export class ProtocolLandSDK {
   constructor(host?: string) {
@@ -46,6 +45,14 @@ export class ProtocolLandSDK {
       updateRepoDeploymentBranch: repo.updateRepoDeploymentBranch,
       updateRepoPrivateStateTxId: repo.updateRepoPrivateStateTxId,
       updateRepoTxId: repo.updateRepoTxId,
+      getRepoHierarchy: repo.getRepoHierarchy,
+      saveBondingCurveId: repo.saveBondingCurveId,
+      saveRepoBondingCurve: repo.saveRepoBondingCurve,
+      decentralizeRepo: repo.decentralizeRepo,
+      saveForkedImportTokenSettings: repo.saveForkedImportTokenSettings,
+      saveImportedTokenId: repo.saveImportedTokenId,
+      saveLiquidityPoolId: repo.saveLiquidityPoolId,
+      saveTokenSettings: repo.saveTokenSettings,
     };
   }
 

@@ -255,3 +255,5 @@ export type ForkRepositoryOptions = {
   dataTxId: string
   tokenProcessId: string
 }
+
+export type SaveRepoTokenDetailsOptions = RepoToken & BondingCurve
