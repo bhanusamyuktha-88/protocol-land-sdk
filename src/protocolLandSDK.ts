@@ -3,6 +3,7 @@ import * as org from "./services/organization";
 import * as repo from "./services/repository";
 import * as user from "./services/user";
 import * as issue from "./services/issues";
+import * as hackathon from "./services/hackathon";
 
 export class ProtocolLandSDK {
   constructor(host?: string) {
@@ -82,5 +83,17 @@ export class ProtocolLandSDK {
       updateIssueComment: issue.updateIssueComment,
       updateIssueDetails: issue.updateIssueDetails,
     };
+  }
+
+  Hackathon() {
+    return {
+       getHackathonById: hackathon.getHackathonById,
+       getAllHackathons: hackathon.getAllHackathons,
+       createHackathonTeam: hackathon.createHackathonTeam,
+       createNewHackathon: hackathon.createNewHackathon,
+       participate: hackathon.participate,
+       postUpdatedHackathon: hackathon.postUpdatedHackathon,
+       selectPrizeWinner: hackathon.selectPrizeWinner,
+    }
   }
 }
