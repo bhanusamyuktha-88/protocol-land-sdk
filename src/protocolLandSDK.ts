@@ -4,6 +4,7 @@ import * as repo from "./services/repository";
 import * as user from "./services/user";
 import * as issue from "./services/issues";
 import * as hackathon from "./services/hackathon";
+import * as pr from "./services/pull-request";
 
 export class ProtocolLandSDK {
   constructor(host?: string) {
@@ -87,13 +88,29 @@ export class ProtocolLandSDK {
 
   Hackathon() {
     return {
-       getHackathonById: hackathon.getHackathonById,
-       getAllHackathons: hackathon.getAllHackathons,
-       createHackathonTeam: hackathon.createHackathonTeam,
-       createNewHackathon: hackathon.createNewHackathon,
-       participate: hackathon.participate,
-       postUpdatedHackathon: hackathon.postUpdatedHackathon,
-       selectPrizeWinner: hackathon.selectPrizeWinner,
-    }
+      getHackathonById: hackathon.getHackathonById,
+      getAllHackathons: hackathon.getAllHackathons,
+      createHackathonTeam: hackathon.createHackathonTeam,
+      createNewHackathon: hackathon.createNewHackathon,
+      participate: hackathon.participate,
+      postUpdatedHackathon: hackathon.postUpdatedHackathon,
+      selectPrizeWinner: hackathon.selectPrizeWinner,
+    };
+  }
+
+  pullRequest() {
+    return {
+      createPullRequest: pr.createPR,
+      getPullRequestById: pr.getPRById,
+      mergePullRequest: pr.mergePR,
+      addCommentToPullRequest: pr.addCommentToPR,
+      updateCommentOnPullRequest: pr.updatePRComment,
+      approvePullRequest: pr.approvePR,
+      addReviewersToPullRequest: pr.addReviewersToPR,
+      closePullRequest: pr.closePR,
+      linkIssueToPullRequest: pr.linkIssueToPR,
+      reopenPullRequest: pr.reopenPR,
+      updatePullRequestDetails: pr.updatePRDetails,
+    };
   }
 }
