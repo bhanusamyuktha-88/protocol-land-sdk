@@ -1,20 +1,30 @@
 import { arweaveMainNode } from "../../helpers/arweave/config/arweaveInstance";
 import { User } from "../../types";
-import { getUserDetails } from "./getUser";
+import { getUserDetails, getUsernameAvailable } from "./getUser";
 import { saveUserDetails } from "./helper/saveUser";
 import { createProfileSchema } from "./schema";
 
-export const createProfile = async (
+export async function* createProfile(
   details: Partial<User>,
   signer: string,
   address: string
-): Promise<{ result: User }> => {
+): AsyncGenerator<{ step: string; data?: any }> {
   try {
+    yield { step: "Validating Input Details..." };
     createProfileSchema.parse(details);
 
+    yield { step: "Checking Username availability..." };
+    const isAvailable = await getUsernameAvailable(details.username || "");
+    if (!isAvailable) {
+      throw {
+        message: "Username already exists...",
+      };
+    }
+
+    yield { step: "Saving User details" };
     const { result } = await saveUserDetails(details, address, signer);
-    return { result };
+    yield { step: "User saved successfully", data: result };
   } catch (error: any) {
-    throw new Error(`Failed to create user: ${error.message}`);
+    yield { step: "Error", data: error.message };
   }
-};
+}

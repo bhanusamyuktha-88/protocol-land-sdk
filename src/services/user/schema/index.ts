@@ -1,14 +1,17 @@
 import { z } from "zod";
 
+export const arweaveAddressSchema = z
+  .string()
+  .regex(/^[a-z0-9-_]{43}$/i, "Invalid Arweave address");
+
+export const usernameSchema = z
+  .string()
+  .min(1, { message: "Username is required" })
+  .regex(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i, "Invalid username format");
+
 export const createProfileSchema = z.object({
   fullname: z.string().min(1, { message: "Full name is required" }),
-  username: z
-    .string()
-    .min(1, { message: "Username is required" })
-    .regex(
-      /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
-      "Invalid username format"
-    ),
+  username: usernameSchema,
   bio: z.string().optional(),
   website: z.string().url("Invalid URL").optional(),
   location: z.string().optional(),

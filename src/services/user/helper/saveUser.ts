@@ -9,21 +9,6 @@ export const saveUserDetails = async (
   address: string,
   signer: string
 ): Promise<{ result: User }> => {
-  if (details.username) {
-    const { Messages } = await dryrun({
-      process: PL_PROCESS_ID,
-      tags: getTags({
-        Action: "Get-Username-Availability",
-        Username: details.username,
-      }),
-    });
-
-    const { result: isAvailable } = JSON.parse(Messages[0]?.Data || "{}");
-
-    if (!isAvailable) {
-      throw new Error(`Username ${details.username} is not available.`);
-    }
-  }
 
   await sendMessage({
     tags: getTags({
