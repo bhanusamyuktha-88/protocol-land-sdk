@@ -1,19 +1,21 @@
-import { dryrun } from '@permaweb/aoconnect';
+import { dryrun } from "@permaweb/aoconnect";
 import { PL_PROCESS_ID } from "../../../constants/constants";
-import { getTags } from '../../../helpers/arweave/getTags';
+import { getTags } from "../../../helpers/arweave/getTags";
+import { orgUsernameSchema } from "../schema";
 
 export const getOrganizationNameAvailability = async (
-  name: string,
-  address: string
+  name: string
 ): Promise<boolean> => {
+  orgUsernameSchema.parse(name);
+
   const { Messages } = await dryrun({
     process: PL_PROCESS_ID,
     tags: getTags({
-      Action: 'Get-Organization-Name-Availability',
-      Name: name
+      Action: "Get-Organization-Name-Availability",
+      Name: name,
     }),
-    Owner: address
-  })
+  });
 
-  return JSON.parse(Messages[0].Data).result
-}
+  const { result: isAvailable } = JSON.parse(Messages[0].Data);
+  return isAvailable;
+};
