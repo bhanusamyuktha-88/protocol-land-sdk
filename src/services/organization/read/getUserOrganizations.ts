@@ -3,8 +3,10 @@ import { dryrun } from "@permaweb/aoconnect";
 import { getTags } from "../../../helpers/arweave/getTags";
 import { withAsync } from "../../../helpers/withAsync";
 import { Organization } from "../../../types";
+import { arweaveAddressSchema } from "../schema";
 
 export const getUserOrganizations = async (address: string) => {
+  arweaveAddressSchema.parse(address);
   let orgs: Organization[] = [];
   const { response: ownerOrgsResponse } = await withAsync(() =>
     dryrun({

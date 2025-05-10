@@ -1,6 +1,5 @@
-import { arweaveMainNode } from "../../helpers/arweave/config/arweaveInstance";
 import { User } from "../../types";
-import { getUserDetails, getUsernameAvailable } from "./getUser";
+import { getUsernameAvailable } from "./getUser";
 import { saveUserDetails } from "./helper/saveUser";
 import { createProfileSchema } from "./schema";
 
