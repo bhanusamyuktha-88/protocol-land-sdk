@@ -1,46 +1,66 @@
+import { result } from "@permaweb/aoconnect";
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { Organization, Tag } from "../../../types";
-import { getOrganizationById } from "../read";
+import { PL_PROCESS_ID } from "../../../constants/constants";
 import { getOrganizationNameAvailability } from "../read/getOrganizationNameAvailability";
+import { getOrganizationById } from "../read/getOrganizationById";
+import { updateOrganizationSchema } from "../schema";
 
 export async function* updateOrganization(
-  wallet: string,
   id: string,
-  data: Partial<Organization>
+  updates: {
+    name?: string;
+    username?: string;
+    description?: string;
+  },
+  wallet: string
 ): AsyncGenerator<{ step: string; data?: any }> {
   try {
-    if (data.username) {
-      yield { step: "Checking Organization username Availability..." };
-      const isAvailable = await getOrganizationNameAvailability(data.username);
+    yield { step: "Validating Update Payload..." };
+    updateOrganizationSchema.parse(updates);
+
+    yield { step: "Fetching Existing Organization..." };
+    const org = await getOrganizationById(id);
+    if (!org) {
+      throw new Error("Organization not found.");
+    }
+
+    if (updates.username && updates.username !== org.username) {
+      yield { step: "Checking Username Availability..." };
+      const isAvailable = await getOrganizationNameAvailability(
+        updates.username
+      );
       if (!isAvailable) {
-        throw new Error("Organization username already exists.");
+        throw new Error("Username is already taken.");
       }
     }
 
-    if (data.id) {
-      yield { step: "Checking Organization ID Availability..." };
-      const existingById = await getOrganizationById(data.id);
-      if (existingById?.id) {
-        throw new Error("Organization ID already exists.");
-      }
-    }
+    yield { step: "Sending Update Message..." };
+    const Tags = getTags({
+      Action: "Update-Organization",
+      Id: id,
+    });
 
-    const tags = getTags({ Action: "Update-Organization-Details", Id: id });
-    Object.keys(data).forEach((key) => {
-      const val = data[key as keyof Organization] as string;
-      tags.push({
-        name: key.charAt(0).toUpperCase() + key.slice(1),
-        value: val.charAt(0).toUpperCase() + val.slice(1),
-      } as Tag);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (typeof value === "string" && value.trim() !== "") {
+        Tags.push({
+          name: key.charAt(0).toUpperCase() + key.slice(1),
+          value: value,
+        });
+      }
     });
 
     const msgId = await sendMessage({
       signer: wallet,
-      tags,
+      tags: Tags,
     });
 
-    yield { step: "Organization Updated Successfully", data: msgId };
+    const { Messages } = await result({
+      message: msgId,
+      process: PL_PROCESS_ID,
+    });
+
+    yield { step: "Organization Updated Successfully", data: Messages };
   } catch (error: any) {
     yield { step: "Error", data: error.message };
   }

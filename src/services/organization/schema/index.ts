@@ -13,8 +13,13 @@ export const orgUsernameSchema = z
   .regex(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i, "Invalid username format");
 
 export const createOrganizationSchema = z.object({
-  id: z.string().min(1, { message: "Organization ID is required" }),
   name: z.string().min(1, { message: "Organization name is required" }),
   username: orgUsernameSchema,
+  description: z.string().optional(),
+});
+
+export const updateOrganizationSchema = z.object({
+  name: z.string().optional(),
+  username: z.string().optional(),
   description: z.string().optional(),
 });

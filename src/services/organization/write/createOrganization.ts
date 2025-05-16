@@ -4,12 +4,11 @@ import { sendMessage } from "../../../helpers/arweave/sendMessage";
 import { PL_PROCESS_ID } from "../../../constants/constants";
 import { Tag } from "../../../types";
 import { getOrganizationNameAvailability } from "../read/getOrganizationNameAvailability";
-import { getOrganizationById } from "../read/getOrganizationById"; 
 import { createOrganizationSchema } from "../schema";
+import { v4 as uuidv4 } from "uuid";
 
 export async function* createOrganization(
   details: {
-    id: string;
     name: string;
     username: string;
     description: string;
@@ -20,24 +19,20 @@ export async function* createOrganization(
     yield { step: "Validating Input Details..." };
     createOrganizationSchema.parse(details);
 
-    yield { step: "Checking Organization userName Availability..." };
-    const isuserNameAvailable = await getOrganizationNameAvailability(details.username);
-    if (!isuserNameAvailable) {
+    yield { step: "Checking Organization Username Availability..." };
+    const isUsernameAvailable = await getOrganizationNameAvailability(details.username);
+    if (!isUsernameAvailable) {
       throw new Error("Organization username already exists.");
     }
 
-    yield { step: "Checking Organization ID Availability..." };
-    const existingById = await getOrganizationById(details.id);
-    if (existingById?.id) {
-      throw new Error("Organization ID already exists.");
-    }
+    const id = uuidv4();
 
     yield { step: "Creating Organization ..." };
     const msgId = await sendMessage({
       signer: wallet,
       tags: getTags({
         Action: "Create-Organization",
-        Id: details.id,
+        Id: id,
         Name: details.name,
         Username: details.username,
         Description: details.description,
