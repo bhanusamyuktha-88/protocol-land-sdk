@@ -2,7 +2,7 @@ import { result } from "@permaweb/aoconnect";
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
 import { PL_PROCESS_ID } from "../../../constants/constants";
-import { Tag } from "../../../types";
+import { Tag, walletSignerType } from "../../../types";
 import { getOrganizationNameAvailability } from "../read/getOrganizationNameAvailability";
 import { createOrganizationSchema } from "../schema";
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +13,7 @@ export async function* createOrganization(
     username: string;
     description: string;
   },
-  wallet: string,
+  wallet: walletSignerType,
 ): AsyncGenerator<{ step: string; data?: any }> {
   try {
     yield { step: "Validating Input Details..." };

@@ -2,13 +2,13 @@ import { result } from "@permaweb/aoconnect";
 import { getTags } from "../../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../../helpers/arweave/sendMessage";
 import { PL_PROCESS_ID } from "../../../../constants/constants";
-import { BondingCurve, RepoToken, SaveRepoTokenDetailsOptions } from "../../../../types";
+import { BondingCurve, RepoToken, SaveRepoTokenDetailsOptions, walletSignerType } from "../../../../types";
 import { pollForTxBeingAvailable } from "../../../../helpers/pollForTxBeingAvailable";
 
 export const saveTokenSettings = async (
   id: string,
   repoToken: Partial<SaveRepoTokenDetailsOptions>,
-  wallet: string
+  wallet: walletSignerType
 ): Promise<{
   token: RepoToken;
   bondingCurve: BondingCurve;

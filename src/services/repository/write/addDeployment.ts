@@ -1,12 +1,12 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { Deployment } from "../../../types";
+import { Deployment, walletSignerType } from "../../../types";
 import { getRepo } from "../read";
 
 export async function addDeployment(
   deployment: Partial<Deployment>,
   repoId: string,
-  wallet: string
+  wallet: walletSignerType
 ) {
   await sendMessage({
     tags: getTags({

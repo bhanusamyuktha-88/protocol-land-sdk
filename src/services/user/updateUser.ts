@@ -1,11 +1,11 @@
-import { User } from "../../types";
+import { User, walletSignerType } from "../../types";
 import { saveUserDetails } from "./helper/saveUser";
 import { updateProfileSchema } from "./schema";
 import { getUsernameAvailable } from "./getUser";
 
 export async function* updateProfile(
   details: Partial<User>,
-  signer: string,
+  signer: walletSignerType,
   address: string
 ): AsyncGenerator<{ step: string; data?: any }> {
   try {

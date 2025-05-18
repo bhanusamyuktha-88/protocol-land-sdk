@@ -1,10 +1,11 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 
 export async function updateRepoName(
   repoId: string,
   newName: string,
-  wallet: string
+  wallet: walletSignerType
 ) {
   await sendMessage({
     tags: getTags({
@@ -19,7 +20,7 @@ export async function updateRepoName(
 export async function updateRepoDescription(
   description: string,
   repoId: string,
-  wallet: string
+  wallet: walletSignerType
 ) {
   await sendMessage({
     tags: getTags({
@@ -34,7 +35,7 @@ export async function updateRepoDescription(
 export async function updateRepoDeploymentBranch(
   deploymentBranch: string,
   repoId: string,
-  wallet: string
+  wallet: walletSignerType
 ) {
   await sendMessage({
     tags: getTags({

@@ -1,11 +1,12 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getIssueById } from "../read";
 
 export async function updateIssueComment(
   repoId: string,
   issueId: number,
-  wallet: string,
+  wallet: walletSignerType,
   comment: { id: number; description: string }
 ) {
   await sendMessage({

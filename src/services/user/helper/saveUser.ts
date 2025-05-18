@@ -1,13 +1,13 @@
 import { dryrun } from "@permaweb/aoconnect";
 import { PL_PROCESS_ID } from "../../../constants/constants";
 import { getTags } from "../../../helpers/arweave/getTags";
-import { User } from "../../../types";
+import { User, walletSignerType } from "../../../types";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
 
 export const saveUserDetails = async (
   details: Partial<User>,
   address: string,
-  signer: string
+  signer: walletSignerType
 ): Promise<{ result: User }> => {
 
   await sendMessage({

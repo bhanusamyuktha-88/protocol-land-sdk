@@ -1,8 +1,9 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getRepo } from "../read";
 
-export async function inviteContributor(address: string, repoId: string,wallet: string) {
+export async function inviteContributor(address: string, repoId: string,wallet: walletSignerType) {
   await sendMessage({
     tags: getTags({
       Action: "Invite-Contributor",

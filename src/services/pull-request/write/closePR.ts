@@ -1,5 +1,6 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getPRById } from "../read";
 
 export async function closePR({
@@ -9,7 +10,7 @@ export async function closePR({
 }: {
   repoId: string;
   prId: number;
-  wallet: string;
+  wallet: walletSignerType;
 }) {
   await sendMessage({
     tags: getTags({

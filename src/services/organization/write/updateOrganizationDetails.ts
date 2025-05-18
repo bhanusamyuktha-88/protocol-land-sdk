@@ -5,6 +5,7 @@ import { PL_PROCESS_ID } from "../../../constants/constants";
 import { getOrganizationNameAvailability } from "../read/getOrganizationNameAvailability";
 import { getOrganizationById } from "../read/getOrganizationById";
 import { updateOrganizationSchema } from "../schema";
+import { walletSignerType } from "../../../types";
 
 export async function* updateOrganization(
   id: string,
@@ -13,7 +14,7 @@ export async function* updateOrganization(
     username?: string;
     description?: string;
   },
-  wallet: string
+  wallet: walletSignerType
 ): AsyncGenerator<{ step: string; data?: any }> {
   try {
     yield { step: "Validating Update Payload..." };

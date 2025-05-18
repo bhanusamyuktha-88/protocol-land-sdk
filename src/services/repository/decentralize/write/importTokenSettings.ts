@@ -2,12 +2,12 @@ import { result } from "@permaweb/aoconnect";
 import { getTags } from "../../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../../helpers/arweave/sendMessage";
 import { PL_PROCESS_ID } from "../../../../constants/constants";
-import { Tag } from "../../../../types";
+import { Tag, walletSignerType } from "../../../../types";
 
 export const saveImportedTokenId = async (
   id: string,
   importedTokenId: string,
-  wallet: string
+  wallet: walletSignerType
 ): Promise<boolean> => {
   const msgId = await sendMessage({
     tags: getTags({
