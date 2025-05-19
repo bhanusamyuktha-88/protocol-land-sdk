@@ -256,4 +256,14 @@ export type ForkRepositoryOptions = {
   tokenProcessId: string
 }
 
+export type RepoInitializeOptions = {
+  title: string
+  description: string
+  visibility: "public" | "private"
+  creator: "ORGANIZATION" | "USER"
+  address: string
+  orgId?: string
+}
+
+
 export type SaveRepoTokenDetailsOptions = RepoToken & BondingCurve

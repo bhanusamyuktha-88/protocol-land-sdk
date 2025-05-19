@@ -1,12 +1,13 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getPRById } from "../read";
 
 export async function linkIssueToPR(
   repoId: string,
   prId: number,
   issueId: number,
-  wallet: string
+  wallet: walletSignerType
 ) {
   await sendMessage({
     tags: getTags({

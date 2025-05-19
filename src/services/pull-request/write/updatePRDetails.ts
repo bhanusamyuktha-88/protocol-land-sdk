@@ -1,13 +1,13 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
 import { isInvalidInput } from "../../../helpers/isInvalidInput";
-import { PullRequest } from "../../../types";
+import { PullRequest, walletSignerType } from "../../../types";
 import { getPRById } from "../read";
 
 export async function updatePRDetails(
   repoId: string,
   prId: number,
-  wallet: string,
+  wallet: walletSignerType,
   pullRequest: Partial<PullRequest>
 ) {
   let tags = {

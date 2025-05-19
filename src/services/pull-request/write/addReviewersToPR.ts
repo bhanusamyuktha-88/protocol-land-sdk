@@ -1,6 +1,6 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { AddReviewersToPROptions } from "../../../types";
+import { AddReviewersToPROptions, walletSignerType } from "../../../types";
 import { getPRById } from "../read";
 
 export async function addReviewersToPR({
@@ -8,7 +8,7 @@ export async function addReviewersToPR({
   repoId,
   prId,
   wallet,
-}: AddReviewersToPROptions & { wallet: string }) {
+}: AddReviewersToPROptions & { wallet: walletSignerType }) {
   await sendMessage({
     tags: getTags({
       Action: "Add-PR-Reviewers",

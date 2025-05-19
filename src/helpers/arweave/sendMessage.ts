@@ -2,6 +2,7 @@ import { createDataItemSigner, message, result } from "@permaweb/aoconnect";
 import { PL_PROCESS_ID } from "../../constants/constants";
 import { extractMessage } from "../extractMessage";
 import { SendMessageArgs } from "../../types";
+import { isBrowser } from "../usageFinder";
 
 export async function sendMessage({
   tags,
@@ -13,14 +14,17 @@ export async function sendMessage({
   if (!tags || !tags.length) {
     throw new Error("Tags are required");
   }
-  if (!signer || !signer.length) {
-    throw new Error("Signer is required");
+
+  let wallet: any = signer;
+
+  if(isBrowser()){
+    wallet = window?.arweaveWallet;
   }
 
   const args = {
     process: pid || PL_PROCESS_ID,
     tags,
-    signer: createDataItemSigner(JSON.parse(signer)),
+    signer: createDataItemSigner(wallet),
   } as any;
 
   if (data) args.data = data;

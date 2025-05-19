@@ -1,11 +1,12 @@
-import { getTags } from "../../../helpers/arweave/getTags";
-import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { getRepo } from "../read";
+import { getTags } from "../../../../helpers/arweave/getTags";
+import { sendMessage } from "../../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../../types";
+import { getRepo } from "../../read";
 
 export const acceptContributorInvite = async (
   id: string,
   visibility: string,
-  wallet: string,
+  wallet: walletSignerType,
   privateStateTxId: string | null,
   ghSyncPrivateStateTxId: string | null
 ) => {

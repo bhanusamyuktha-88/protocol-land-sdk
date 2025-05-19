@@ -1,11 +1,12 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getRepo } from "../read";
 
 export const cancelContributorInvite = async (
   id: string,
   contributor: string,
-  wallet: string
+  wallet: walletSignerType
 ) => {
   //rotate keys
   await sendMessage({

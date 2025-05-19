@@ -1,10 +1,11 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 
 export const cancelInvite = async (
   id: string,
   address: string,
-  wallet: string
+  wallet: walletSignerType
 ): Promise<string> => {
   const msgId = await sendMessage({
     signer: wallet,

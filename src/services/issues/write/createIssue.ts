@@ -1,5 +1,6 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getRepo } from "../../repository";
 
 export async function createIssue(
@@ -7,7 +8,7 @@ export async function createIssue(
   description: string,
   repoId: string,
   address: string,
-  wallet: string
+  wallet: walletSignerType
 ) {
   const args = {
     tags: getTags({

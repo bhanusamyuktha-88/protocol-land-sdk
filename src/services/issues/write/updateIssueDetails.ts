@@ -1,12 +1,12 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
 import { isInvalidInput } from "../../../helpers/isInvalidInput";
-import { Issue } from "../../../types";
+import { Issue, walletSignerType } from "../../../types";
 
 export async function updateIssueDetails(
   repoId: string,
   issueId: number,
-  wallet: string,
+  wallet: walletSignerType,
   issue: Partial<Issue>
 ) {
   let tags = {

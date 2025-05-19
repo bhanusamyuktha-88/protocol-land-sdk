@@ -1,9 +1,9 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { Hackathon } from "../../../types";
+import { Hackathon, walletSignerType } from "../../../types";
 
 export async function postUpdatedHackathon(
-  wallet: string,
+  wallet: walletSignerType,
   hackathon: Partial<Hackathon>
 ): Promise<string> {
   const args = {

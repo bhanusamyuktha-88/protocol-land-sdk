@@ -2,13 +2,13 @@ import { result } from "@permaweb/aoconnect";
 import { PL_PROCESS_ID } from "../../../../constants/constants";
 import { getTags } from "../../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../../helpers/arweave/sendMessage";
-import { Tag } from "../../../../types";
+import { Tag, walletSignerType } from "../../../../types";
 import { pollForTxBeingAvailable } from "../../../../helpers/pollForTxBeingAvailable";
 
 export const saveBondingCurveId = async (
   id: string,
   bondingCurveId: string,
-  wallet: string
+  wallet: walletSignerType
 ) => {
   const msgId = await sendMessage({
     tags: getTags({

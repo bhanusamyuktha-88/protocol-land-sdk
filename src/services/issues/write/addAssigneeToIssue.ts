@@ -1,12 +1,13 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
+import { walletSignerType } from "../../../types";
 import { getIssueById } from "../read";
 
 export async function addAssigneeToIssue(
   repoId: string,
   issueId: number,
   assignees: string[],
-  wallet: string
+  wallet: walletSignerType
 ) {
   await sendMessage({
     tags: getTags({

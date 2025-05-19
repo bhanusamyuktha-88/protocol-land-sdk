@@ -1,13 +1,13 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { ApprovePROptions } from "../../../types";
+import { ApprovePROptions, walletSignerType } from "../../../types";
 import { getPRById } from "../read";
 
 export async function approvePR({
   repoId,
   prId,
   wallet,
-}: ApprovePROptions & { wallet: string }) {
+}: ApprovePROptions & { wallet: walletSignerType }) {
   await sendMessage({
     tags: getTags({
       Action: "Approve-PR",
