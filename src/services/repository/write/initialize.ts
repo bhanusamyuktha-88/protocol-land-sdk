@@ -1,5 +1,3 @@
-// TODO: complete initialize repo function
-
 import { v4 as uuid } from "uuid";
 import { RepoInitializeOptions, walletSignerType } from "../../../types";
 import { createRepoSchema } from "../schema";
