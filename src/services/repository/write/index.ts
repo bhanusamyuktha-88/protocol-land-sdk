@@ -9,3 +9,4 @@ export * from "./rejectContributorInvite";
 export * from "./updateDomain";
 export * from "./updateRepoDetails";
 export * from "./forkRepo";
+export * from "./acceptContributor";
