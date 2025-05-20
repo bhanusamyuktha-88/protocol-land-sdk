@@ -1,19 +1,45 @@
 import { getTags } from "../../../helpers/arweave/getTags";
 import { sendMessage } from "../../../helpers/arweave/sendMessage";
-import { NewHackatonItem, walletSignerType } from "../../../types";
+import { NewHackathonItem, walletSignerType } from "../../../types";
+import { createHackathonSchema } from "../schema";
+import { v4 as uuidv4 } from "uuid";
 
-export async function createNewHackathon(
+export async function* createNewHackathon(
   wallet: walletSignerType,
-  hackathon: NewHackatonItem
-): Promise<string> {
-  const args = {
-    signer: wallet,
-    tags: getTags({
-      Action: "Create-Hackathon",
-    }),
-    data: JSON.stringify(hackathon),
-  } as any;
+  input: NewHackathonItem
+):  AsyncGenerator<{ step: string; data?: any }> {
+  try {
+    yield { step: "Validating Hackathon Details..." };
+    createHackathonSchema.parse(input);
 
-  const msgId = await sendMessage(args);
-  return msgId;
+    yield { step: "Generating Hackathon ID..." };
+    const id = uuidv4();
+    const newHackathon = { ...input, id };
+
+    yield { step: "Sending Hackathon Creation Message..." };
+
+    const msgId = await sendMessage({
+      signer: wallet,
+      tags: getTags({
+        Action: "Create-Hackathon",
+        Id: id,
+        Title: input.title,
+        HostedBy: input.hostedBy,
+        StartsAt: input.startsAt.toString(),
+        EndsAt: input.endsAt.toString(),
+        Location: input.location,
+      }),
+      data: JSON.stringify(newHackathon),
+    });
+
+    yield {
+      step: "Hackathon Created Successfully",
+      data: {
+        id,
+        msgId
+      },
+    };
+  } catch (error: any) {
+    yield { step: "Error", data: error.message };
+  }
 }
