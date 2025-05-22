@@ -1,13 +1,14 @@
 import git from "isomorphic-git";
-import { packGitRepo } from "./gitHelpers";
+import { checkoutBranch, getCurrentBranch, packGitRepo } from "./gitHelpers";
 import { waitFor } from "./waitFor";
-import { Tag, walletSignerType } from "../types";
+import { PostUpdatedRepoOptions, Tag, walletSignerType } from "../types";
 import { createDataItemSigner, spawn } from "@permaweb/aoconnect";
 import { toArrayBuffer } from "./toArrayBuffer";
 import { signAndSendTx } from "./arweave/signAndSend";
 import { sendMessage } from "./arweave/sendMessage";
 import { getTags } from "./arweave/getTags";
 import { isBrowser } from "./usageFinder";
+import { JWKInterface } from "arbundles";
 
 export async function createNewRepo(
   title: string,
@@ -160,4 +161,62 @@ async function getAosDetails() {
   } catch {
     return defaultDetails;
   }
+}
+
+export async function postUpdatedRepo(
+  { fs, dir, owner, id }: PostUpdatedRepoOptions,
+  signer: JWKInterface
+) {
+  const { error: initialError, result: initialBranch } = await getCurrentBranch(
+    { fs, dir }
+  );
+
+  if (initialError || (initialBranch && initialBranch !== "master")) {
+    await checkoutBranch({ fs, dir, name: "master" });
+  }
+
+  await waitFor(500);
+
+  const repoBlob = await packGitRepo({ fs, dir });
+
+  const { result: currentBranch } = await getCurrentBranch({ fs, dir });
+
+  // Checkout back to the initial branch if a different branch was checked out
+  if (
+    !initialError &&
+    initialBranch &&
+    currentBranch &&
+    currentBranch !== initialBranch
+  ) {
+    await checkoutBranch({ fs, dir, name: initialBranch });
+  }
+
+  const data = (await toArrayBuffer(repoBlob)) as ArrayBuffer;
+
+  await waitFor(500);
+
+  const inputTags = [
+    { name: "App-Name", value: "Protocol.Land" },
+    { name: "Content-Type", value: repoBlob.type },
+    { name: "Creator", value: owner },
+    { name: "Repo-Id", value: id },
+    { name: "Type", value: "repo-update" },
+  ] as Tag[];
+
+  const dataTxResponse = await signAndSendTx(data, inputTags, signer);
+
+  if (!dataTxResponse) {
+    throw new Error("Failed to post Git repository");
+  }
+
+  await sendMessage({
+    tags: getTags({
+      Action: "Update-Repo-TxId",
+      Id: id,
+      "Data-TxId": dataTxResponse,
+    }) as Tag[],
+    signer,
+  });
+
+  return dataTxResponse;
 }
