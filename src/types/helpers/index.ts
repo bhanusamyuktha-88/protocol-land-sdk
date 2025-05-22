@@ -35,3 +35,12 @@ export interface JWKInterface extends JWKPublicInterface {
 }
 
 export type walletSignerType = JWKInterface | "use_wallet";
+
+export type PostUpdatedRepoOptions = {
+  id: string;
+  fs: any;
+  dir: string;
+  owner: string;
+  isPrivate: boolean;
+  privateStateTxId?: string;
+};

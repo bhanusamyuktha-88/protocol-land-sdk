@@ -17,7 +17,22 @@ export type createPROptions = {
   baseBranch: string;
   compareBranch: string;
   repoId: string;
+  address: string;
   linkedIssueId?: number;
+};
+
+export type MergePullRequestOptions = {
+  fs: any;
+  dir: string;
+  base: string;
+  compare: string;
+  author: string;
+  dryRun?: boolean;
+  repoId: string;
+  prId: number;
+  fork: boolean;
+  isPrivate: boolean;
+  privateStateTxId?: string;
 };
 
 export type PRSide = {
