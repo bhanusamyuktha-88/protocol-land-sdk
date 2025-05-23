@@ -10,7 +10,7 @@ export const PrizeSchema = z.object({
 });
 
 export const createHackathonSchema = z.object({
-  hackathonLogo: z.string().url(),
+  hackathonLogo: z.string().regex(/^[a-z0-9-_]{43}$/i, "Invalid hackathon logo address"),
   title: z.string().min(3),
   shortDescription: z.string().min(10),
   descriptionTxId: z.string(),
@@ -19,7 +19,7 @@ export const createHackathonSchema = z.object({
   totalRewards: z.number(),
   startsAt: z.number(),
   endsAt: z.number(),
-  hostLogo: z.string().url(),
+  hostLogo: z.string().regex(/^[a-z0-9-_]{43}$/i, "Invalid host logo address"),
   hostedBy: z.string().min(3),
   location: z.string().min(3),
   tags: z.array(z.string()),
