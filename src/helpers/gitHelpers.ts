@@ -2,6 +2,7 @@ import JSZip from "jszip";
 import {
   CommonBranchOptions,
   CommonPackUnpackGitRepoOptions,
+  CreateBranchOptions,
   JWKInterface,
   PrivateState,
   Tag,
@@ -118,4 +119,27 @@ export async function checkoutBranch({
       track: false,
     })
   );
+}
+
+export async function createNewBranch({ fs, dir, name }: CreateBranchOptions) {
+  const { error: gitBranchError } = await withAsync(() =>
+    git.branch({ fs, dir, ref: name, checkout: true })
+  );
+
+  if (gitBranchError) {
+    if (gitBranchError instanceof git.Errors.InvalidRefNameError) {
+      throw new Error("Invalid branch name.");
+    } else if (gitBranchError instanceof git.Errors.AlreadyExistsError) {
+      throw gitBranchError;
+    }
+    throw new Error("Failed to create new branch.");
+  }
+
+  return {
+    result: true,
+  };
+}
+
+export async function getAllBranches({ fs, dir }: CommonBranchOptions) {
+  return await git.listBranches({ fs, dir });
 }

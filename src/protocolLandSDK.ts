@@ -5,6 +5,7 @@ import * as user from "./services/user";
 import * as issue from "./services/issues";
 import * as hackathon from "./services/hackathon";
 import * as pr from "./services/pull-request";
+import * as gitBranch from "./services/branch";
 
 export class ProtocolLandSDK {
   constructor(host?: string) {
@@ -39,5 +40,9 @@ export class ProtocolLandSDK {
 
   pullRequest() {
     return pr;
+  }
+
+  branch() {
+    return gitBranch;
   }
 }
